@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Talleres Comunitarios</title>
+</head>
+<body>
+    <h1>Municipalidad de Villa Verde</h1>
+    <h2>Talleres Comunitarios Disponibles</h2>
+
+    <form method="get">
+        <label for="categoria">Filtrar por categoría:</label>
+        <select name="categoria" id="categoria" onchange="this.form.submit()">
+            <option value="">-- Todas --</option>
+            {% for cat in categorias %}
+                <option value="{{ cat.id }}" {% if categoria_seleccionada == cat.id %}selected{% endif %}>{{ cat.nombre }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <ul>
+    {% for taller in talleres %}
+        <li>
+            <h3>{{ taller.titulo }}</h3>
+            <p>Fecha: {{ taller.fecha }}</p>
+            <p>Duración: {{ taller.duracion_horas }} horas</p>
+            <p>Profesor: {{ taller.profesor.nombre_completo }}</p>
+            <p>Lugar: {{ taller.lugar.nombre }}</p>
+            <p>Categoría: {{ taller.categoria.nombre }}</p>
+        </li>
+    {% empty %}
+        <li>No hay talleres disponibles</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
