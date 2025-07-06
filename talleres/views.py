@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions
-from .models import Taller
+from .models import Taller, Categoria
 from .serializers import TallerSerializer, CrearTallerSerializer
 from .utils import es_feriado_irrenunciable
 from datetime import date
@@ -30,3 +30,22 @@ class CrearTallerJuntaView(generics.CreateAPIView):
                 taller.estado = 'rechazado'
                 taller.observacion = "Sólo se programan talleres al aire libre en feriados"
         taller.save()
+
+def talleres_disponibles(request):
+    categoria_id = request.GET.get('categoria')
+
+    talleres = Taller.objects.filter(
+        estado='aceptado',
+        fecha__gt=date.today()
+    )
+
+    if categoria_id:
+        talleres = talleres.filter(categoria_id=categoria_id)
+
+    categorias = Categoria.objects.all()
+
+    return render(request, 'talleres/listado.html', {
+        'talleres': talleres,
+        'categorias': categorias,
+        'categoria_seleccionada': int(categoria_id) if categoria_id else None
+    })
