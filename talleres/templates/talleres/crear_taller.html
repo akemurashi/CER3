@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Taller</title>
+</head>
+<body>
+  <h1>Proponer Taller Comunitario</h1>
+
+  {% if mensaje %}
+    <p style="color: green;">{{ mensaje }}</p>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <label>Título:</label><br>
+    <input type="text" name="titulo" required><br><br>
+
+    <label>Fecha:</label><br>
+    <input type="date" name="fecha" required><br><br>
+
+    <label>Duración (horas):</label><br>
+    <input type="number" step="0.5" name="duracion_horas" required><br><br>
+
+    <label>Profesor:</label><br>
+    <select name="profesor">
+      {% for p in profesores %}
+        <option value="{{ p.id }}">{{ p.nombre_completo }}</option>
+      {% endfor %}
+    </select><br><br>
+
+    <label>Lugar:</label><br>
+    <select name="lugar">
+      {% for l in lugares %}
+        <option value="{{ l.id }}">{{ l.nombre }}</option>
+      {% endfor %}
+    </select><br><br>
+
+    <label>Categoría:</label><br>
+    <select name="categoria">
+      {% for c in categorias %}
+        <option value="{{ c.id }}">{{ c.nombre }}</option>
+      {% endfor %}
+    </select><br><br>
+
+    <button type="submit">Enviar propuesta</button>
+  </form>
+</body>
+</html>
