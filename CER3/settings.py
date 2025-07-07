@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'talleres',
     'usuarios',
 ]
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'talleres_disponibles'
+LOGOUT_REDIRECT_URL = 'talleres_disponibles'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

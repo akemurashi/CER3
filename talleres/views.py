@@ -11,7 +11,8 @@ from .serializers import TallerSerializer, CrearTallerSerializer
 from .utils import es_feriado_irrenunciable
 from datetime import date
 from rest_framework.response import Response
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 class ListaTalleresJuntaView(generics.ListAPIView):
     queryset = Taller.objects.all()
@@ -110,3 +111,15 @@ def talleres_disponibles(request):
         'categorias': categorias,
         'categoria_seleccionada': int(categoria_id) if categoria_id else None
     })
+
+def registro(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            usuario = form.save()
+            login(request, usuario)  # opcional: iniciar sesión después de registrar
+            return redirect('talleres_disponibles')
+    else:
+        form = UserCreationForm()
+    
+    return render(request, 'talleres/register.html', {'form': form})

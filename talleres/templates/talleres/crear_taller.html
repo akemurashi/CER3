@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Crear Taller</title>
-</head>
-<body>
-  <h1>Proponer Taller Comunitario</h1>
+{% extends 'talleres/base.html' %}
+{% block title %}Proponer Taller{% endblock %}
+{% block content %}
 
-  {% if mensaje %}
+<h2>Proponer Nuevo Taller</h2>
+
+{% if mensaje %}
     <p style="color: green;">{{ mensaje }}</p>
-  {% endif %}
+{% endif %}
 
-  <form method="post">
+<form method="post">
     {% csrf_token %}
     <label>Título:</label><br>
     <input type="text" name="titulo" required><br><br>
@@ -44,6 +41,6 @@
     </select><br><br>
 
     <button type="submit">Enviar propuesta</button>
-  </form>
-</body>
-</html>
+</form>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Villa Verde{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Municipalidad de Villa Verde</h1>
+        <nav>
+            {% if user.is_authenticated %}
+                <span>Bienvenido, {{ user.username }}</span> |
+                <a href="{% url 'crear_taller_web' %}">Proponer Taller</a> |
+                <a href="{% url 'talleres_disponibles' %}">Ver API</a> |
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Iniciar sesión</a> |
+                <a href="{% url 'register' %}">Registrarse</a>
+            {% endif %}
+        </nav>
+        <hr>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

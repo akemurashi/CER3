@@ -1,24 +1,20 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Talleres Comunitarios</title>
-</head>
-<body>
-    <h1>Municipalidad de Villa Verde</h1>
-    <h2>Talleres Comunitarios Disponibles</h2>
+{% extends 'talleres/base.html' %}
+{% block title %}Talleres Disponibles{% endblock %}
+{% block content %}
 
-    <form method="get">
-        <label for="categoria">Filtrar por categoría:</label>
-        <select name="categoria" id="categoria" onchange="this.form.submit()">
-            <option value="">-- Todas --</option>
-            {% for cat in categorias %}
-                <option value="{{ cat.id }}" {% if categoria_seleccionada == cat.id %}selected{% endif %}>{{ cat.nombre }}</option>
-            {% endfor %}
-        </select>
-    </form>
+<h2>Talleres Comunitarios Disponibles</h2>
 
-    <ul>
+<form method="get">
+    <label for="categoria">Filtrar por categoría:</label>
+    <select name="categoria" id="categoria" onchange="this.form.submit()">
+        <option value="">-- Todas --</option>
+        {% for cat in categorias %}
+            <option value="{{ cat.id }}" {% if categoria_seleccionada == cat.id %}selected{% endif %}>{{ cat.nombre }}</option>
+        {% endfor %}
+    </select>
+</form>
+
+<ul>
     {% for taller in talleres %}
         <li>
             <h3>{{ taller.titulo }}</h3>
@@ -31,6 +27,6 @@
     {% empty %}
         <li>No hay talleres disponibles</li>
     {% endfor %}
-    </ul>
-</body>
-</html>
+</ul>
+
+{% endblock %}
